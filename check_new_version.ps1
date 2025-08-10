@@ -120,11 +120,3 @@ elseif ($currentVersion -ne $latestStableVersion) {
         Update-BurpSuite
     }
 }
-else {
-    [System.Windows.Forms.MessageBox]::Show(
-        "You already have the latest stable version: $currentVersion",
-        "Burp Suite - Update",
-        [System.Windows.Forms.MessageBoxButtons]::OK,
-        [System.Windows.Forms.MessageBoxIcon]::Information
-    )
-}
